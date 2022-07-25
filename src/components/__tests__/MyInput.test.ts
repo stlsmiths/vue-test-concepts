@@ -68,13 +68,14 @@ describe('MyInput', () => {
     expect( wrapper.vm.local ).toEqual(nvalue)
     expect( input.element.value ).toEqual(nvalue)
 
-    const changed = wrapper.emitted('change')
-    const updated = wrapper.emitted('update:model-value')
+    const changed: any[][] | undefined = wrapper.emitted('change')
+    const updated: any[][] | undefined = wrapper.emitted('update:model-value')
     // console.log('changed', changed)
     expect( changed ).toHaveLength(1)
     // expect( changed[0][0] ).toBe(12)
 
     // console.log('update is', updated)
+    // const testValue = updated[0][0] ? updated[0][0] : null
     expect( updated ).toHaveLength(1)
     expect( updated[0][0] ).toBe( nvalue )
 
