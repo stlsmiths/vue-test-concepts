@@ -14,6 +14,10 @@ const props = defineProps({
   type: String,
   default: 'my-class'
  },
+  disabled: {
+   type: Boolean,
+    default: false
+  },
  maxLen: {
   type: Number,
   default: 8
@@ -45,13 +49,14 @@ function onUpdate(val: string) {
 
 <template>
   <div data-testid="container">
-    <label for="myinput" data-testid="label">{{ label }}</label>
+    <label data-testid="label">{{ label }}</label>
     <input  type="text"
             name="myinput"
             v-model="local"
             data-testid="input"
             :class="localClass"
             :maxlength="maxLen"
+            :disabled="disabled"
             @change="emits('change',$event)"
             @update:model-value="onUpdate"
             />
