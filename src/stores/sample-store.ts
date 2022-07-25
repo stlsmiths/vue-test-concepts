@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 const initTags = 'beer,whiskey,falafel,mustard,turkey'.split(',')
 
-export const useCounterStore = defineStore({
+export const useSampleStore = defineStore({
   id: 'counter',
   state: () => ({
     counter: 0,

@@ -20,21 +20,26 @@ const props = defineProps({
  }
 })
 
-const emits = defineEmits(['change'])
+const emits = defineEmits(['change','update:model-value'])
 
 const local = ref<string | null>(null)
 
-const slen = computed<number>( () => props.modelValue ? props.modelValue.length : 0 )
+const slen = computed<number>( () => local.value ? local.value.length : 0 )
 
 watch(
   () => props.modelValue,
   (v) => {
     if (v) {
-      local.value = v
+      local.value = v.substring(0,props.maxLen)
     }
   },
   {immediate: true}
 )
+
+function onUpdate(val: string) {
+  local.value = val.substring(0,props.maxLen)
+  emits('update:model-value', local.value)
+}
 
 </script>
 
@@ -48,6 +53,7 @@ watch(
             :class="localClass"
             :maxlength="maxLen"
             @change="emits('change',$event)"
+            @update:model-value="onUpdate"
             />
     <div data-testid="slen">( There are {{ slen }} characters )</div>
   </div>

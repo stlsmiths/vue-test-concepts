@@ -4,21 +4,21 @@ import MyInput from '../MyInput.vue'
 
 const tstr = (str: string ): string => `[data-testid="${str}"]`
 
-describe('MyInput', () => {
-  let wrapper, vm, input
+describe('MyEditor', () => {
+  let wrapper, vm
 
-  it('renders properly', () => {
+  it.skip('renders properly', () => {
     const mockInput = 'Hello Vitest !'
     wrapper = mount(MyInput, {
-        props: {
-          modelValue: mockInput
-        }
-      })
+      props: {
+        modelValue: mockInput
+      }
+    })
     expect( wrapper.find(tstr('container')).html() ).toContain( 'type="text"' )
     expect( wrapper.find(tstr('slen')).text() ).toContain( 'characters' )
   })
 
-  it('sets view-model and initial props correctly', () => {
+  it.skip('sets view-model and initial props correctly', () => {
     const mockInput = 'Hello Vitest !'
     wrapper = mount(MyInput, {
       props: {
@@ -34,7 +34,7 @@ describe('MyInput', () => {
     expect( vm.label ).toBe( 'My Label' )
     expect( vm.maxLen ).toBe( 8 )
 
-    input = wrapper.find('[data-testid=input]')
+    const input = wrapper.find('[data-testid=input]')
     console.log('input', input.text() )
 
     expect( wrapper.find(tstr('label')).text() ).toContain( 'My Label' )
@@ -43,12 +43,13 @@ describe('MyInput', () => {
     // expect( wrapper.find('[data-testid=input]').attributes('value') ).toContain('Hello Vitest')
   })
 
-  it('should have correct non-default properties', () => {})
-  it('should update modelValue on change correctly', () => {})
-  it('should emit change event properly', () => {})
-  it('should restrict input via mxLen property', () => {})
-  it('should disable', () => {})
   it('should have isDirty working', () => {})
-  it('should work with initial mv null', () => {})
+  it('should disable all controls', () => {})
+
+  it('should reset to default values', () => {})
+  it('should emit save event', () => {})
+  it('should emit clear event', () => {})
+  it('should emit reset event', () => {})
+  it('should emit drop event', () => {})
 
 })
