@@ -10,7 +10,7 @@ const props = defineProps<{
   disabled?: boolean,
 }>()
 
-const emits = defineEmits(['save','reset','cancel'])
+const emits = defineEmits(['save','reset','cancel','drop'])
 
 const store = useSampleStore()
 const localTitle = ref<string | undefined>()
@@ -68,7 +68,10 @@ function onCancel() {
       <fieldset>
 
         <label>Enter the item text ...</label>
-        <input type="text" v-model="editItem.text" data-testid="input-text" />
+        <input type="text"
+               v-model="editItem.text"
+               :disabled="ldisabled"
+               data-testid="input-text" />
 
         <div style="padding-left: 10px;margin-top: 2rem;margin-bottom: 2rem">
           Controls are: <input type="checkbox" v-model="ldisabled" data-testid="disable-check" /> {{ ldisabled ? 'Disabled' : 'Enabled' }}
@@ -80,5 +83,6 @@ function onCancel() {
     <button :disabled="isDisabled" @click="onSave" data-testid="btn-save">Save</button>
     <button :disabled="isDisabled" @click="onReset" data-testid="btn-reset">Reset</button>
     <button @click="onCancel" data-testid="btn-cancel">Cancel</button>
+    <button @click="emits('drop', editItem)" data-testid="btn-drop">Drop Item</button>
   </div>
 </template>

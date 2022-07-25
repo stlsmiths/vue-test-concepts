@@ -12,14 +12,18 @@ const tstr = (str: string ): string => `[data-testid="${str}"]`
 const titleSelector = tstr('title')
 const subtitleSelector = tstr('subtitle')
 const chkSelector = tstr('disable-check')
+
 const inputSelector = tstr('input-text')
+
 const saveSelector = tstr('btn-save')
 const resetSelector = tstr('btn-reset')
 const cancelSelector = tstr('btn-cancel')
+const dropSelector = tstr('btn-drop')
 
 // Mocks and spies, etc...
 const mockTitle = 'Test TITLE'
 const mockSubtitle = 'just a subtitle'
+const mockItem = { test: 3, text: 'Test item TEXT' }
 
 // custom mount
 function mountEditor( options = {} ) {
@@ -27,7 +31,7 @@ function mountEditor( options = {} ) {
     globals: {
       plugins: [ createTestingPinia({stubActions: false}) ]
     },
-    ...options,
+    ...options
   })
 }
 
@@ -36,7 +40,17 @@ function elDisabled( el: any ) {
 }
 
 describe('MyEditor', () => {
-  let wrapper, vm, store
+  let wrapper: any, vm: any, store: any
+
+  it('exists and renders', () => {
+    wrapper = mountEditor({
+      props: {
+        item: {}
+      }
+    })
+    expect( wrapper.exists() ).toBe( true )
+    expect( wrapper.html() ).toContain( 'div' )
+  })
 
   describe('title property changes', () => {
 
@@ -147,7 +161,7 @@ describe('MyEditor', () => {
     it('should have computed isDirty working', async () => {
       wrapper = mountEditor({
         props: {
-          item: {}
+          item: mockItem
         }
       })
 
@@ -157,7 +171,7 @@ describe('MyEditor', () => {
       expect( elDisabled(wrapper.find(resetSelector)) ).toBeTruthy()  // reset is disabled initially
 
       // after change to item ... it should dirty
-      wrapper.vm.touchItem() // editItem = { test: 'abc' }
+      await wrapper.vm.touchItem() // editItem = { test: 'abc' }
       expect( wrapper.vm.isDirty ).toBe( true )
     })
 
@@ -174,13 +188,13 @@ describe('MyEditor', () => {
       expect( elDisabled(wrapper.find(resetSelector)) ).toBeTruthy()  // reset is disabled initially
 
       // after change to item ... it should dirty
-      wrapper.vm.touchItem()
+      await wrapper.vm.touchItem()
 
       expect( wrapper.vm.isDirty ).toBe( true )
       expect( wrapper.vm.isDisabled ).toBe( false )
       // buttons ... should allow saving
-      expect( elDisabled(wrapper.find(saveSelector)) ).toBe( true )
-      expect( elDisabled(wrapper.find(resetSelector)) ).toBe( true )
+      expect( elDisabled(wrapper.find(saveSelector)) ).toBe( false )
+      expect( elDisabled(wrapper.find(resetSelector)) ).toBe( false )
     })
 
     it('should disable when prop.disable changes', async () => {
@@ -197,22 +211,28 @@ describe('MyEditor', () => {
       expect( elDisabled(wrapper.find(saveSelector)) ).toBe( true )   // save is disabled initially
       expect( elDisabled(wrapper.find(resetSelector)) ).toBe( true )  // reset is disabled initially
 
+      // controls
+      expect( elDisabled(wrapper.find(inputSelector)) ).toBe( true )
+
       await wrapper.setProps({
         disabled: false
       })
       // also ... changed editItem
-      wrapper.vm.touchItem()
+      await wrapper.vm.touchItem()
 
       expect( wrapper.vm.isDisabled ).toBe( false )
       expect( wrapper.vm.isDirty ).toBe( true )
       // buttons ...
-      expect( elDisabled(wrapper.find(saveSelector)) ).toBe( true )
-      expect( elDisabled(wrapper.find(resetSelector)) ).toBe( true )
+      expect( elDisabled(wrapper.find(saveSelector)) ).toBe( false )
+      expect( elDisabled(wrapper.find(resetSelector)) ).toBe( false )
+      // controls
+      expect( elDisabled(wrapper.find(inputSelector)) ).toBe( false )
     })
   })
 
   describe('input text control tests', ()=> {
-    let origItem = { test: 3, text: 'Test item TEXT' }
+    let origItem = mockItem
+    let input
 
     beforeEach( () => {
       wrapper = mountEditor({
@@ -222,48 +242,155 @@ describe('MyEditor', () => {
       })
     })
 
-    it('should have intended value in input text', async () => {
-
-      expect( wrapper.vm.isDirty ).toBe( false )
-      expect( wrapper.find(inputSelector).element.value ).toBe( origItem.text )
-
-      // after change to item ... it should dirty
-      expect( wrapper.vm.isDirty ).toBe( false )
+    it('should have intended value in input[text]', async () => {
+      input = wrapper.find(inputSelector)
+      vm = wrapper.vm
+      expect( vm.isDirty ).toBe( false )
+      expect( input.element.value ).toBe( origItem.text )
+      expect( vm.editItem.text ).toBe( origItem.text )
     })
 
+    it('should update input[text] and change dirty status', async () => {
+      input = wrapper.find(inputSelector)
+      vm = wrapper.vm
+      expect( vm.isDirty ).toBe( false )
+      const ntext = 'updated text!'
+      await input.setValue(ntext)
+
+      expect( vm.isDirty ).toBe( true )
+      expect( input.element.value ).toBe( ntext )
+      expect( vm.editItem.text ).toBe( ntext )
+    })
+
+    it('should update input[text] but reset correctly', async () => {
+      input = wrapper.find(inputSelector)
+      vm = wrapper.vm
+      expect( vm.isDirty ).toBe( false )
+      const ntext = 'updated text!'
+      await input.setValue(ntext)
+
+      expect( vm.isDirty ).toBe( true )
+
+      await vm.onReset()
+
+      expect( vm.isDirty ).toBe( false )
+      expect( vm.editItem.text ).toBe( origItem.text )
+      expect( input.element.value ).toBe( origItem.text )
+    })
   })
 
-  it('should reset to default values', async () => {
+  it('editItem should reset to default values', async () => {
     wrapper = mountEditor({
       props: {
-        item: { test: '123'}
+        item: { test: '123', text: 'just text'}
       }
     })
 
-    expect( wrapper.vm.isDirty ).toBe(false)
-    expect( wrapper.vm.isDisabled ).toBe(true)
+    vm = wrapper.vm
+    expect( vm.isDirty ).toBe(false)
+    expect( vm.isDisabled ).toBe(true)
 
     await wrapper.setProps({
       disabled: false,
     })
     // also ... changed editItem
-    wrapper.vm.editItem.test = 'abc'
+    const ntext = 'updated text!'
+    await wrapper.find(inputSelector).setValue(ntext)
 
-    expect( wrapper.vm.isDirty ).toBe(true)
-    expect( wrapper.vm.editItem.test ).toBe('abc')
+    expect( vm.isDirty ).toBe( true )
+    expect( vm.editItem.text ).toBe( ntext )
 
     // reset the form .. via method
-    wrapper.vm.onReset()
-    expect( wrapper.vm.isDirty ).toBe(false)
-    expect( wrapper.vm.editItem.test ).toBe('123')
+    await vm.onReset()
+    expect( vm.isDirty ).toBe(false)
+    expect( vm.editItem.test ).toBe('123')
+    expect( vm.editItem.text ).toBe( 'just text')
   })
 
-  it('should emit save event', () => {
+  describe('component events emitted', () => {
+    let input: any, saveBtn: any, resetBtn: any, cancelBtn: any, dropBtn: any
+
+    beforeEach( () => {
+      wrapper = mountEditor({
+        props: {
+          item: mockItem
+        }
+      })
+      input = wrapper.find(inputSelector)
+      saveBtn = wrapper.find(saveSelector)
+      resetBtn = wrapper.find(resetSelector)
+      cancelBtn = wrapper.find(cancelSelector)
+      dropBtn = wrapper.find(dropSelector)
+      vm = wrapper.vm
+    })
+
+    it('should fire "save" after editing input[text]', async () => {
+      expect( vm.isDirty ).toBe( false )
+
+      // update some items ...
+      const ntext = 'Updated TEXT setting'
+      await input.setValue(ntext)
+      await vm.touchItem()
+
+      expect( vm.isDirty ).toBe( true )
+      expect( input.element.value ).toBe( ntext )
+      expect( vm.editItem.text ).toBe( ntext )
+
+      // check event
+      await saveBtn.trigger('click')
+      const save = wrapper.emitted('save')
+      expect( save ).toBeTruthy()
+      expect( save ).toHaveLength( 1 )
+      expect( save[0][0] ).toEqual({
+        test: mockItem.test,
+        text: ntext,
+        time: vm.editItem.time
+      })
+
+      // and ... props.item should have changed ... NO, not a modelValue !!
+      // expect( vm.props.item.time ).toBe( vm.editItem.time )
+
+    })
+
+    it('should emit reset event', async () => {
+      expect( vm.isDirty ).toBe( false )
+
+      // update some items ...
+      const ntext = 'Updated TEXT setting'
+      await input.setValue(ntext)
+      await vm.touchItem()
+
+      expect( vm.isDirty ).toBe( true )
+      expect( input.element.value ).toBe( ntext )
+      expect( vm.editItem.text ).toBe( ntext )
+
+      // check event
+      await resetBtn.trigger('click')
+      const reset = wrapper.emitted('reset')
+      expect( reset ).toBeTruthy()
+      expect( reset ).toHaveLength( 1 )
+      expect( reset[0][0] ).toBeUndefined()
+    })
+
+    it('should emit cancel event', async () => {
+      await dropBtn.trigger('click')
+      const drop = wrapper.emitted('drop')
+      expect( drop ).toBeTruthy()
+      expect( drop ).toHaveLength( 1 )
+      expect( drop[0][0] ).toEqual({...mockItem})
+    })
+
+
+    it('should emit drop event', async () => {
+      await dropBtn.trigger('click')
+      const drop = wrapper.emitted('drop')
+      expect( drop ).toBeTruthy()
+      expect( drop ).toHaveLength( 1 )
+      expect( drop[0][0] ).toEqual({
+        ...mockItem
+      })
+    })
 
   })
-
-  it('should emit clear event', () => {})
-  it('should emit reset event', () => {})
-  it('should emit drop event', () => {})
 
 })

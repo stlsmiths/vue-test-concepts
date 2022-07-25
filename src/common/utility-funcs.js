@@ -1,3 +1,6 @@
+
+export const isObject = (obj) => typeof obj === 'object' && obj !== null;
+
 /**
  * @function isEqualObjects
  * copied this from:
@@ -9,7 +12,13 @@
  * @returns {boolean}
  */
 export function isEqualObjects (a, b) {
-  if ( !Object.keys(a).length && !Object.keys(b).length ) {
+  // return false if a or b are not objects
+  if ( !isObject(a) || !isObject(b) ) {
+    return false
+  }
+
+  // null objects with no keys
+  if ( !Object.keys(a).length || !Object.keys(b).length ) {
     return true
   }
   // if the number of keys is different, they are different
@@ -17,14 +26,21 @@ export function isEqualObjects (a, b) {
     return false
   }
 
+  let rtn = true
   for (const key in a) {
     const a_value = a[key]
     const b_value = b[key]
+    if ( !(key in b) ) {
+      rtn = false
+    }
     // If the value is an object, check if they're different objects
     // If it isn't, uses !== to check
     if ( a_value instanceof Date ) {
-      return a_value.getTime() === b_value.getTime()
+      rtn = rtn ? a_value.getTime() === b_value.getTime() : false
     } else if ((a_value instanceof Object && !isEqualObjects(a_value, b_value)) || (!(a_value instanceof Object) && a_value !== b_value)) {
+      rtn = false
+    }
+    if ( !rtn ) {
       return false
     }
   }
