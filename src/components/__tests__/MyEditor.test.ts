@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi} from 'vitest'
 import { mount } from '@vue/test-utils'
 // @ts-ignore
 import { createTestingPinia } from '@pinia/testing'
@@ -367,6 +367,32 @@ describe('MyEditor', () => {
       // check event
       await resetBtn.trigger('click')
       const reset = wrapper.emitted('reset')
+      expect( reset ).toBeTruthy()
+      expect( reset ).toHaveLength( 1 )
+      expect( reset[0][0] ).toBeUndefined()
+    })
+
+    it.skip('should emit reset event - using spies', async () => {
+      expect( vm.isDirty ).toBe( false )
+
+      // update some items ...
+      const ntext = 'Updated TEXT setting'
+      await input.setValue(ntext)
+      await vm.touchItem()
+
+      expect( vm.isDirty ).toBe( true )
+      expect( input.element.value ).toBe( ntext )
+      expect( vm.editItem.text ).toBe( ntext )
+
+      // check event
+      const spy = vi.spyOn(vm,'onReset').mockImplementation( (res) => ({results: 'DONE'}) )
+
+      // await resetBtn.trigger('click')
+      vm.onReset()
+      const reset = wrapper.emitted('reset')
+
+      expect( spy ).toHaveBeenCalled()
+      expect( spy ).toHaveReturnedWith({results: 'DONE'})
       expect( reset ).toBeTruthy()
       expect( reset ).toHaveLength( 1 )
       expect( reset[0][0] ).toBeUndefined()
