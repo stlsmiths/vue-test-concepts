@@ -66,6 +66,7 @@ describe('MyInput', () => {
     await input.setValue(nvalue)
 
     expect( wrapper.vm.local ).toEqual(nvalue)
+    // @ts-ignore
     expect( input.element.value ).toEqual(nvalue)
 
     const changed: any[][] | undefined = wrapper.emitted('change')
@@ -77,6 +78,7 @@ describe('MyInput', () => {
     // console.log('update is', updated)
     // const testValue = updated[0][0] ? updated[0][0] : null
     expect( updated ).toHaveLength(1)
+    // @ts-ignore
     expect( updated[0][0] ).toBe( nvalue )
 
 
@@ -121,11 +123,13 @@ describe('MyInput', () => {
     expect( wrapper.find(slenSel).text() ).toContain( expInput.length )
     expect( wrapper.vm.local ).toBe( expInput )
     expect( wrapper.vm.disabled ).toBe( false )
+    // @ts-ignore
     expect( input.element.disabled ).toBe( false )
 
     // change to disabled
     await wrapper.setProps({ disabled: true })
     expect( wrapper.vm.disabled ).toBe( true )
+    // @ts-ignore
     expect( input.element.disabled ).toBe( true )
 
   })

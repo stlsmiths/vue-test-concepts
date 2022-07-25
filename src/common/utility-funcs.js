@@ -9,6 +9,9 @@
  * @returns {boolean}
  */
 export function isEqualObjects (a, b) {
+  if ( !Object.keys(a).length && !Object.keys(b).length ) {
+    return true
+  }
   // if the number of keys is different, they are different
   if (Object.keys(a).length !== Object.keys(b).length) {
     return false

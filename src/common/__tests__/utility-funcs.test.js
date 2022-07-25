@@ -25,5 +25,8 @@ describe('utility functions', () => {
       expect(isEqualObjects(o1,local1)).toBeFalsy()
       expect(o1.d).not.toEqual(local1.d)
     })
+    it('should be true for both null objects', () => {
+      expect( isEqualObjects({},{}) ).toBeTruthy()
+    })
   })
 })

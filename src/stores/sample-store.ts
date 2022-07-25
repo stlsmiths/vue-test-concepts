@@ -3,10 +3,11 @@ import { defineStore } from 'pinia'
 const initTags = 'beer,whiskey,falafel,mustard,turkey'.split(',')
 
 export const useSampleStore = defineStore({
-  id: 'counter',
+  id: 'sample',
   state: () => ({
     counter: 0,
-    myTags: [] as string[]
+    myTags: [] as string[],
+    appTitle: 'vue-test-concepts Title'
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -22,6 +23,9 @@ export const useSampleStore = defineStore({
       } else {
         this.myTags = [...initTags]
       }
+    },
+    setTitle( title: string ): void {
+      this.appTitle = title
     }
   }
 })

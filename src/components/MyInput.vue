@@ -41,7 +41,7 @@ watch(
 )
 
 function onUpdate(val: string) {
-  local.value = val.substring(0,props.maxLen)
+  // local.value = val.substring(0,props.maxLen)
   emits('update:model-value', local.value)
 }
 
