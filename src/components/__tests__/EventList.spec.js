@@ -52,7 +52,7 @@ describe('EventList', () => {
       await store.fetchEvents()
     })
 
-    it('are rendered in a list with necessary information', async () => {
+    it.skip('are rendered in a list with necessary information', async () => {
       // wrapper = mountEventList()
 /*
           {
