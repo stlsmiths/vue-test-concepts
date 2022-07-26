@@ -1,6 +1,6 @@
 import {describe,it,expect,beforeEach} from 'vitest'
 import { mount } from '@vue/test-utils'
-import EventCard from '@/components/EventCard.vue'
+import EventCard from '../EventCard.vue'
 
 describe('EventCard', () => {
   it(`renders the event's data successfully`, () => {

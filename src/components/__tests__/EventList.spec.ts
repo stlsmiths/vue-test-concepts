@@ -1,17 +1,17 @@
 import {describe,it,expect,beforeEach,beforeAll,vi} from 'vitest'
 import { mount } from '@vue/test-utils'
 import {nextTick} from "vue";
-import router from '@/router'
+import router from '../../router'
 
 import { setActivePinia, createPinia } from 'pinia'
 import {createTestingPinia} from "@pinia/testing";
 
 import {useEvents} from '../../stores/events-store'
 
-import EventList from '@/components/EventList.vue'
+import EventList from '../EventList.vue'
 import { events as mockEvents } from '../../../events-db.json'
 
-function mountEventList(config = {}) {
+function mountEventList(config: any = {}) {
   config.mountOptions = config.mountOptions || {}
   config.plugins = config.plugins || {}
   return mount(EventList, {
@@ -28,7 +28,7 @@ function mountEventList(config = {}) {
 }
 
 describe('EventList', () => {
-  let store, wrapper
+  let store: any, wrapper: any
 
   beforeEach(() => {
     wrapper = mountEventList()

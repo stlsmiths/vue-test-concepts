@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted} from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
-import {useEvents} from '@/stores/events-store.js'
+import {useEvents} from 'stores/events-store'
 
 onMounted( async () => {
   await useEvents().fetchEvents()

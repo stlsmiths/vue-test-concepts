@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import EventList from "@/components/EventList.vue";
+import EventList from "../components/EventList.vue";
 
 </script>
 

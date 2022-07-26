@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi} from 'vitest'
 import { mount } from '@vue/test-utils'
 // @ts-ignore
 import { createTestingPinia } from '@pinia/testing'
-import {useSampleStore} from "@/stores/sample-store";
+import {useSampleStore} from "../../stores/sample-store";
 
 import MyEditor from '../MyEditor.vue'
 import MyInput from '../MyInput.vue'

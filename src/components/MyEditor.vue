@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref,watchEffect,watch,computed,unref,toRaw} from 'vue'
 import {isEqualObjects} from '../common/utility-funcs.js'
-import {useSampleStore} from "@/stores/sample-store";
+import {useSampleStore} from "../stores/sample-store";
 
 const props = defineProps<{
   title?: string,

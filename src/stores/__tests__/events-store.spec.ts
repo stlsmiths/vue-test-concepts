@@ -1,6 +1,6 @@
 import {describe,it,expect,beforeEach,beforeAll} from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
-import {useEvents} from '@/stores/events-store'
+import {useEvents} from '../events-store'
 
 // @ts-ignore
 import {events} from '../../../events-db.json'

@@ -1,25 +1,25 @@
+<script setup lang="ts">
+import {computed,onMounted} from "vue";
+import EventCard from '../components/EventCard.vue'
+import {useEvents} from "../stores/events-store";
+
+const events = computed( () => useEvents().events )
+
+</script>
+
 <template>
   <h1 data-testid="event-list-title">Events for Good</h1>
   <div class="events">
     <router-link
-      class="event-link"
-      :to="{ name: 'EventDetails', params: { id: event.id } }"
-      v-for="event in events"
-      :key="event.id"
+        class="event-link"
+        :to="{ name: 'EventDetails', params: { id: event.id } }"
+        v-for="event in events"
+        :key="event.id"
     >
       <EventCard data-testid="event" :event="event" />
     </router-link>
   </div>
 </template>
-
-<script setup>
-import {computed,onMounted} from "vue";
-import EventCard from '@/components/EventCard.vue'
-import {useEvents} from "@/stores/events-store";
-
-const events = computed( () => useEvents().events )
-
-</script>
 
 <style scoped>
 .events {
