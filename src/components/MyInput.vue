@@ -24,7 +24,7 @@ const props = defineProps({
  }
 })
 
-const emits = defineEmits(['change','update:model-value'])
+const emits = defineEmits(['change','update','update:model-value'])
 
 const local = ref<string | null>(null)
 
@@ -43,6 +43,7 @@ watch(
 function onUpdate(val: string) {
   // local.value = val.substring(0,props.maxLen)
   emits('update:model-value', local.value)
+  emits('update', local.value)
 }
 
 </script>

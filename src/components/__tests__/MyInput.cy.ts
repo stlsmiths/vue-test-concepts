@@ -1,6 +1,4 @@
 import MyInput from '../MyInput.vue'
-import {kStringMaxLength} from "buffer";
-// import {beforeEach} from "vitest";
 
 const tstr = (str: string ): string => `[data-testid="${str}"]`
 
@@ -31,25 +29,27 @@ describe('MyInput.cy.ts', () => {
   })
 
   it('should change text properly', () => {
-    const onChangeSpy = cy.spy().as('onChangeSpy')
+    const onUpdateSpy = cy.spy().as('onUpdateSpy')
     cy.mount(MyInput,{ props: {
           modelValue: mockInput,
-          onUpdateModelValue: onChangeSpy
+          onUpdate: onUpdateSpy
         }
       })
+
     // Act
     const ntext = 'test1234567'
-    cy.get(inputSelector).should('have.value', mockInput.substring(0,8))
-    cy.get(inputSelector).invoke('val',ntext)
-    // cy.get('input').type('test123')
+    // cy.get(inputSelector).should('have.value', mockInput.substring(0,8) )
+    cy.getBySel('input').should('have.value', mockInput.substring(0,8) )
 
-    cy.get(inputSelector).should('have.value', 'test1234')
+    cy.getBySel('input')
+      .clear()
+      .type('test123')
+      .type('{enter}')
+      .should('have.value', 'test123')
 
-    // cy.contains( 'test123' )
-
-    // console.log('input =', cy.get(inputSelector) )
     // Assert
-    // cy.get('@onChangeSpy').should('have.been.calledWith', 'test123')
+    cy.get('@onUpdateSpy').should('have.been.calledWith', 'test123')
+
   })
 
 })
