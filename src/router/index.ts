@@ -9,6 +9,17 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
+    {
+      path: '/events',
+      name: 'events',
+      component: () => import('@/views/Events.vue')
+    },
+   {
+      path: '/event/:id',
+      name: 'EventDetails',
+      props: true,
+      component: () => import('@/views/EventDetails.vue')
+   }
   ]
 })
 

@@ -4,7 +4,7 @@
     <router-link
       class="event-link"
       :to="{ name: 'EventDetails', params: { id: event.id } }"
-      v-for="event in events"
+      v-for="event in estore.events"
       :key="event.id"
     >
       <EventCard data-testid="event" :event="event" />
@@ -12,26 +12,13 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import {onMounted} from "vue";
 import EventCard from '@/components/EventCard.vue'
-export default {
-  components: {
-    EventCard
-  },
-  created() {
-    this.$store.dispatch('fetchEvents').catch(error => {
-      this.$router.push({
-        name: 'ErrorDisplay',
-        params: { error: error }
-      })
-    })
-  },
-  computed: {
-    events() {
-      return this.$store.state.events
-    }
-  }
-}
+import {useEvents} from "@/stores/events-store";
+
+const estore = useEvents()
+
 </script>
 
 <style scoped>
@@ -41,7 +28,7 @@ export default {
   align-items: center;
 }
 .event-link {
-  color: #2c3e50;
+  color: white;
   text-decoration: none;
 }
 </style>

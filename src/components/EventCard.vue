@@ -21,7 +21,7 @@ export default {
   padding: 20px;
   width: 250px;
   cursor: pointer;
-  border: 1px solid #39495c;
+  border: 1px solid #34eada;
   margin-bottom: 18px;
 }
 .event-card:hover {

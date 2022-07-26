@@ -1,5 +1,13 @@
 @import "./base.css";
 
+.blue {
+  color: #79f8e1;
+}
+.brown {
+  color: #ea8237;
+}
+
+
 #app {
   max-width: 1000px;
   margin: 0 auto;

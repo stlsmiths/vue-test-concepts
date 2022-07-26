@@ -4,6 +4,8 @@ This repo was created as `npm init vue` and answering yes for ts, pinia, vitest,
 
 This template should help get you started developing with Vue 3 in Vite.
 
+I have merged some features / testing components from [Vue Mastery - Real World Testing](https://github.com/Code-Pop/real-world-testing)
+
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
