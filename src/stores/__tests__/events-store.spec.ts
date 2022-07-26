@@ -2,6 +2,9 @@ import {describe,it,expect,beforeEach,beforeAll} from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 import {useEvents} from '@/stores/events-store'
 
+// @ts-ignore
+import {events} from '../../../events-db.json'
+
 describe('Events Store', () => {
   let store: any
   beforeEach(() => {
@@ -14,7 +17,7 @@ describe('Events Store', () => {
 
   it('fetches', async () => {
     const eventsRtn = await store.fetchEvents()
-    expect(store.events).toHaveLength(8)
+    expect(store.events).toHaveLength( events.length )
   })
 
 })

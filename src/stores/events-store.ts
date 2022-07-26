@@ -8,8 +8,8 @@ export const useEvents = defineStore( 'events', () => {
 
     async function fetchEvents() {
         const resp = await EventService.getEvents()
-        events.value = resp
-        return resp
+        events.value = resp.data
+        return resp.data
     }
 
     function eventById(id: string | number) {

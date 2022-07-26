@@ -4,7 +4,7 @@
     <router-link
       class="event-link"
       :to="{ name: 'EventDetails', params: { id: event.id } }"
-      v-for="event in estore.events"
+      v-for="event in events"
       :key="event.id"
     >
       <EventCard data-testid="event" :event="event" />
@@ -13,11 +13,11 @@
 </template>
 
 <script setup>
-import {onMounted} from "vue";
+import {computed,onMounted} from "vue";
 import EventCard from '@/components/EventCard.vue'
 import {useEvents} from "@/stores/events-store";
 
-const estore = useEvents()
+const events = computed( () => useEvents().events )
 
 </script>
 

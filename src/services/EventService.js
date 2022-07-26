@@ -1,16 +1,20 @@
-// https://github.com/Code-Pop/real-world-testing/tree/Real-World-Testing-L5-end/src/services
+import axios from 'axios'
 
-const headers = new Headers()
-headers.append( 'Content-Type', 'application/json' )
-
-const baseUrl = 'http://localhost:3000'
+const apiClient = axios.create({
+    baseURL: 'http://localhost:3000',
+    withCredentials: false,
+    headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+    }
+})
 
 export default {
     getEvents() {
-        return fetch( baseUrl + '/events', {headers} ).then( res => res.json() )
+        return apiClient.get('/events')
     },
     getEvent(id) {
-        return fetch( baseUrl + '/events/' + id, {headers}).then( res => res.json() )
+        return apiClient.get('/events/' + id)
     },
     postEvent(event) {
         // return apiClient.post('/events', event)

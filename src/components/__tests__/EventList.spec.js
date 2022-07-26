@@ -1,8 +1,15 @@
-import EventList from '@/views/EventList'
+import {describe,it,expect,beforeEach,beforeAll} from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createStore } from '@/store'
+import {nextTick} from "vue";
 import router from '@/router'
-import { events as mockEvents } from '../../db.json'
+
+import { setActivePinia, createPinia } from 'pinia'
+import {createTestingPinia} from "@pinia/testing";
+
+import {useEvents} from '../../stores/events-store'
+
+import EventList from '@/components/EventList.vue'
+import { events as mockEvents } from '../../../events-db.json'
 
 function mountEventList(config = {}) {
   config.mountOptions = config.mountOptions || {}
@@ -10,7 +17,7 @@ function mountEventList(config = {}) {
   return mount(EventList, {
     global: {
       plugins: [
-        createStore(config.plugins.store), 
+        createTestingPinia(),
         router
       ]
     },
@@ -18,12 +25,13 @@ function mountEventList(config = {}) {
   })
 }
 
-let wrapper
-
 describe('EventList', () => {
+  let store, wrapper
 
   beforeEach(() => {
     wrapper = mountEventList()
+    setActivePinia(createPinia())
+    store = useEvents()
   })
 
   it('should render the events', () => {
@@ -38,9 +46,16 @@ describe('EventList', () => {
     })
   })
 
-  describe('events', () => {
-    it('are rendered in a list with necessary information', () => {
-      wrapper = mountEventList({
+  describe('events', async () => {
+
+    beforeEach( async () => {
+      await store.fetchEvents()
+    })
+
+    it('are rendered in a list with necessary information', async () => {
+      // wrapper = mountEventList()
+/*
+          {
         plugins: {
           store: {
             state: () => ({
@@ -49,6 +64,13 @@ describe('EventList', () => {
           }
         }
       })
+*/
+      await nextTick()
+      // await store.fetchEvents()
+      console.log(wrapper.vm.events )
+
+      expect( wrapper.vm.events ).toHaveLength( 9 )
+
       const events = wrapper.findAll('[data-testid=event]')
       expect(events).toHaveLength(mockEvents.length)
 
