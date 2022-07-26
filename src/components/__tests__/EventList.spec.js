@@ -1,4 +1,4 @@
-import {describe,it,expect,beforeEach,beforeAll} from 'vitest'
+import {describe,it,expect,beforeEach,beforeAll,vi} from 'vitest'
 import { mount } from '@vue/test-utils'
 import {nextTick} from "vue";
 import router from '@/router'
@@ -17,7 +17,9 @@ function mountEventList(config = {}) {
   return mount(EventList, {
     global: {
       plugins: [
-        createTestingPinia(),
+        createTestingPinia({
+          createSpy: vi.fn
+        }),
         router
       ]
     },

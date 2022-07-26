@@ -29,7 +29,10 @@ const mockItem = { test: 3, text: 'Test item TEXT' }
 function mountEditor( options = {} ) {
   return mount(MyEditor, {
     globals: {
-      plugins: [ createTestingPinia({stubActions: false}) ]
+      plugins: [ createTestingPinia({
+        stubActions: false,
+        createSpy: vi.fn
+      }) ]
     },
     ...options
   })
@@ -141,6 +144,7 @@ describe('MyEditor', () => {
         },
         globals: {
           plugins: [ createTestingPinia({
+            createSpy: vi.fn,
             initialState: {
               sample: {
                 appTitle: initTitle

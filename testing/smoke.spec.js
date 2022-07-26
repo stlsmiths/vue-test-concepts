@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {it,expect} from 'vitest'
 
 it('works', async () => {
   const result = await axios.get('/events')
