@@ -13,7 +13,7 @@ function updateItem(item: any) {
 
 <template>
   <div>
-    <h1>Vue - Test - Pinia</h1>
+    <h1>Vue - Test - Concepts</h1>
 
     <div style="margin-top: 1rem;margin-bottom: 1rem;">
       <router-link to="/events">Events - Test Demo</router-link>

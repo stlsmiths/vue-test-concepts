@@ -2,13 +2,15 @@
   "name": "vue-test-pinia",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite & json-server --watch events-db.json --port 3000",
+    "dev": "vite --port 4173 & json-server --watch events-db.json --port 3000",
+    "dev5": "vite --port 5173 & json-server --watch events-db.json --port 3000",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
     "test:unit:cover": "vitest --environment jsdom --coverage",
     "test:cy:comp": "cypress open --component",
-    "test:e2e": "start-server-and-test preview http://localhost:4173/ 'cypress open --e2e'",
+    "test:e2e": "npm run dev5 & cypress open --e2e",
+    "test:e2e:OLD": "start-server-and-test preview http://localhost:4173/ 'cypress open --e2e'",
     "test:e2e:ci": "start-server-and-test preview http://localhost:4173/ 'cypress run --e2e'",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"

@@ -1,3 +1,4 @@
+import { mount } from 'cypress/vue'
 import MyInput from '../MyInput.vue'
 
 const tstr = (str: string ): string => `[data-testid="${str}"]`
@@ -30,11 +31,11 @@ describe('MyInput.cy.ts', () => {
 
   it('should change text properly', () => {
     const onUpdateSpy = cy.spy().as('onUpdateSpy')
-    cy.mount(MyInput,{ props: {
+    mount(MyInput,{ props: {
           modelValue: mockInput,
           onUpdate: onUpdateSpy
         }
-      })
+      }).as('vueWrapper')
 
     // Act
     const ntext = 'test1234567'
@@ -49,6 +50,11 @@ describe('MyInput.cy.ts', () => {
 
     // Assert
     cy.get('@onUpdateSpy').should('have.been.calledWith', 'test123')
+
+    cy.get('@vueWrapper').should( wrapper => {
+      expect( wrapper.emitted('update') ).to.have.length(8)
+      expect( wrapper.emitted('update:model-value') ).to.have.length(1)
+    })
 
   })
 
