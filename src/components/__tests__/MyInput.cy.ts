@@ -50,11 +50,32 @@ describe('MyInput.cy.ts', () => {
 
     // Assert
     cy.get('@onUpdateSpy').should('have.been.calledWith', 'test123')
-
-    cy.get('@vueWrapper').should( wrapper => {
-      expect( wrapper.emitted('update') ).to.have.length(8)
-      expect( wrapper.emitted('update:model-value') ).to.have.length(1)
+/*
+        .vue().should( wrap => {
+      debugger;
     })
+*/
+
+    // See https://github.com/JessicaSachs/vue-3-cypress-vite/blob/master/src/components/HelloWorld.spec.jsx
+    cy.get('@vueWrapper')
+        .should( wrapper => {
+          // make sure chrome dev / pause on debug is enabled
+          //  wrapper has .componentVM with all props, or just as .vm
+          //  wrapper.emitted has events emitted
+          debugger;
+          console.log('wrapper', wrapper )
+          expect( wrapper.emitted('update') ).to.have.length(8)
+          expect( wrapper.emitted('update:model-value') ).to.have.length(8)
+        })
+
+/*
+    cy.getBySel('input')
+        .vue()
+        .then( wrapper => {
+          debugger
+        })
+*/
+
 
   })
 
