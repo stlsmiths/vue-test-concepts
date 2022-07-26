@@ -17,7 +17,7 @@ describe('Events Store', () => {
 
   it('fetches', async () => {
     const eventsRtn = await store.fetchEvents()
-    expect(store.events).toHaveLength( events.length )
+    expect(store.events.data).toHaveLength( events.length )
   })
 
 })

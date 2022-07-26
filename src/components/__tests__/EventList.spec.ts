@@ -9,6 +9,7 @@ import {createTestingPinia} from "@pinia/testing";
 import {useEvents} from '../../stores/events-store'
 
 import EventList from '../EventList.vue'
+// @ts-ignore
 import { events as mockEvents } from '../../../events-db.json'
 
 function mountEventList(config: any = {}) {
