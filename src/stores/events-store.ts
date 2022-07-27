@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import {ref,computed} from 'vue'
 // @ts-ignore
-import EventService from "../services/EventService.js";
+import EventService from "@/services/EventService.js";
 
 export const useEvents = defineStore( 'events', () => {
     const events = ref([])

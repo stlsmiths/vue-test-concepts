@@ -1,6 +1,6 @@
 <script setup>
 import {ref,computed,watch,onMounted} from 'vue'
-import {useEvents} from "../stores/events-store";
+import {useEvents} from "@/stores/events-store";
 
 const props = defineProps({
   id: {

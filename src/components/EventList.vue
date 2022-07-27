@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed,onMounted} from "vue";
-import EventCard from '../components/EventCard.vue'
-import {useEvents} from "../stores/events-store";
+import EventCard from '@/components/EventCard.vue'
+import {useEvents} from "@/stores/events-store";
 
 const events = computed( () => useEvents().events )
 

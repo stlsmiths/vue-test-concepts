@@ -1,7 +1,7 @@
 <script setup>
 import {watch,ref,computed,watchEffect} from 'vue'
-import EventCard from "../components/EventCard.vue";
-import EventService from "../services/EventService";
+import EventCard from "@/components/EventCard.vue";
+import EventService from "@/services/EventService";
 
 //  https://jsonplaceholder.cypress.io/posts?_limit=3
 const props = defineProps({

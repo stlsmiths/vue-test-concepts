@@ -1,16 +1,15 @@
 import {describe,it,expect,beforeEach,beforeAll,vi} from 'vitest'
 import { mount } from '@vue/test-utils'
 import {nextTick} from "vue";
-import router from '../../router'
+import router from '@/router'
 
 import { setActivePinia, createPinia } from 'pinia'
 import {createTestingPinia} from "@pinia/testing";
 
-import {useEvents} from '../../stores/events-store'
-
-import EventList from '../EventList.vue'
+import {useEvents} from '@/stores/events-store'
+import EventList from '@/views/EventList.vue'
 // @ts-ignore
-import { events as mockEvents } from '../../../events-db.json'
+import { events as mockEvents } from '@/../events-db.json'
 
 function mountEventList(config: any = {}) {
   config.mountOptions = config.mountOptions || {}

@@ -2,9 +2,8 @@ import {createTestingPinia} from "@pinia/testing";
 import { setActivePinia, createPinia } from 'pinia'
 
 import EventList from '../EventList.vue'
-import EventCard from '../EventCard.vue'
-import {events} from '../../../events-db.json'
-import router from '../../router'
+import {events} from '@/../events-db.json'
+import router from '@/router'
 
 let mockEvents = events
 

@@ -1,5 +1,5 @@
-import EventCard from '../EventCard.vue'
-import {events} from '../../../events-db.json'
+import EventCard from '@/components/EventCard.vue'
+import {events} from '@/../events-db.json'
 
 let mockEvent = events[0]
 
