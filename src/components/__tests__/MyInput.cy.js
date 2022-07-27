@@ -1,7 +1,7 @@
 import { mount } from 'cypress/vue'
 import MyInput from '../MyInput.vue'
 
-const tstr = (str: string ): string => `[data-testid="${str}"]`
+const tstr = (str) => `[data-testid="${str}"]`
 
 const labelSelector = tstr('label')
 const slenSelector = tstr('slen')
@@ -31,11 +31,11 @@ describe('MyInput.cy.ts', () => {
 
   it('should change text properly', () => {
     const onUpdateSpy = cy.spy().as('onUpdateSpy')
-    mount(MyInput,{ props: {
+    cy.mount(MyInput,{ props: {
           modelValue: mockInput,
           onUpdate: onUpdateSpy
         }
-      }).as('vueWrapper')
+    }).as('vueWrapper')
 
     // Act
     const ntext = 'test1234567'
@@ -50,11 +50,6 @@ describe('MyInput.cy.ts', () => {
 
     // Assert
     cy.get('@onUpdateSpy').should('have.been.calledWith', 'test123')
-/*
-        .vue().should( wrap => {
-      debugger;
-    })
-*/
 
     // See https://github.com/JessicaSachs/vue-3-cypress-vite/blob/master/src/components/HelloWorld.spec.jsx
     cy.get('@vueWrapper')
@@ -62,7 +57,7 @@ describe('MyInput.cy.ts', () => {
           // make sure chrome dev / pause on debug is enabled
           //  wrapper has .componentVM with all props, or just as .vm
           //  wrapper.emitted has events emitted
-          debugger;
+          // debugger;
           console.log('wrapper', wrapper )
           expect( wrapper.emitted('update') ).to.have.length(8)
           expect( wrapper.emitted('update:model-value') ).to.have.length(8)

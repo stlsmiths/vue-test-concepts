@@ -20,13 +20,14 @@ describe('EventCard', () => {
 
     it('should have heading span with date / time', () => {
         cy.getBySel('event-card')
-            .get('span')
-            .should('have.text', '@12:00 on January 28, 2022')
+          .get('span')
+          .should('contain', mockEvent.date)
+          .should('contain', mockEvent.time)
     })
 
     it('should have correct h4 with title', () => {
         cy.getBySel('event-card')
             .get('h4')
-            .should('have.text', 'Cat Adoption Day')
+            .should('have.text', mockEvent.title )
     })
 })
