@@ -19,6 +19,12 @@ const router = createRouter({
       name: 'EventDetails',
       props: true,
       component: () => import('@/views/EventDetails.vue')
+   },
+   {
+      path: '/event_verify/:id',
+      name: 'EventVerify',
+      props: route => ({ params: route.params.id }),
+      component: () => import('@/views/EventVerify.vue')
    }
   ]
 })

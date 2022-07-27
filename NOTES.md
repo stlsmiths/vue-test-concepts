@@ -20,8 +20,9 @@
 
 ## Cypress - mostly _JessicaSachs
 
+ * [Testing Library](https://testing-library.com/docs/)
  * [Vue cypress/vite-dev-server](https://docs.cypress.io/guides/component-testing/component-framework-configuration#Vue-with-Vite)
  * Her stress-free-testing repo [stress-free-testing](https://github.com/JessicaSachs/stress-free-testing/tree/10-stores/src/components)
- * [cy-component-interview](https://github.com/JessicaSachs/cy-component-interview/blob/master/src/components/xhr/ajax-list-spec.js)
+ * Ajax testing / routing [cy-component-interview](https://github.com/JessicaSachs/cy-component-interview/blob/master/src/components/xhr/ajax-list-spec.js)
  * Another [Cypress Component class](https://www.vuemastery.com/conferences/vueconf-us-2021/component-testing-with-vite-vue-and-cypress/)
 

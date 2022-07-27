@@ -1,9 +1,13 @@
 <script setup>
 const props = defineProps({
-    event: {
-      type: Object,
-      required: true
-    }
+  event: {
+    type: Object,
+    required: true
+  },
+  verify: {
+    type: Boolean,
+    default: true
+  }
 })
 </script>
 
@@ -11,6 +15,11 @@ const props = defineProps({
   <div class="event-card" data-testid="event-card">
     <span>@{{ event.time }} on {{ event.date }}</span>
     <h4>{{ event.title }}</h4>
+    <div v-if="verify">
+      <br>
+        <hr>
+      <router-link :to="`/event_verify/${event.id}`" data-testid="verify-link">Verify</router-link>
+    </div>
   </div>
 </template>
 

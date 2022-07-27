@@ -8,7 +8,7 @@
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --environment jsdom",
     "test:unit:cover": "vitest --environment jsdom --coverage",
-    "test:cy:comp": "cypress open --component",
+    "test:comp": "cypress open --component",
     "test:e2e": "npm run dev5 & cypress open --e2e",
     "test:e2e:OLD": "start-server-and-test preview http://localhost:4173/ 'cypress open --e2e'",
     "test:e2e:ci": "start-server-and-test preview http://localhost:4173/ 'cypress run --e2e'",

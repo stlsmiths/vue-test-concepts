@@ -16,7 +16,7 @@ Technologies used in this repo;
    * [json-server](https://www.npmjs.com/package/json-server#getting-started) for storage of fake database data for testing
    * [Mock Service Worker](https://mswjs.io/docs/getting-started/mocks/rest-api) for mocking API requests during testing
 
-![logo](vitest - units.jpg)
+![logo](vitest_units.jpg)
 
 
 ## Testing Roadmap
@@ -35,7 +35,7 @@ To run unit tests simply do;
 ```sh
 vite --environment jsdom
 ```
-Vite includes really noce coverage reporting (using [c8](https://github.com/bcoe/c8)) and it is enabled at runtime as;
+Vite includes really nice coverage reporting (using [c8](https://github.com/bcoe/c8)) and it is enabled at runtime as;
 ```sh
 vite --environment jsdom --coverage
 ```
@@ -52,9 +52,18 @@ vite --environment jsdom --coverage
 ### Component tests (Cypress)
 
 I've relied a lot on @_jessicasachs 
+Great videos / tutorials / repos
+ * Jessica's GH repo [stress-free-testing](https://github.com/JessicaSachs/stress-free-testing/tree/10-stores)
+ * Video [Component testing with Vue/Vite/Cypress - VueConf 2021](https://www.vuemastery.com/conferences/vueconf-us-2021/component-testing-with-vite-vue-and-cypress/)
+   * basically a live coding video ...
+ * 
+
+    
+### End-to-End Integration (Cypress)
 
 
 
+<hr> 
 ## Configuration / Runs
 
 ### Customize configuration
