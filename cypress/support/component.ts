@@ -23,6 +23,24 @@ import '../../src/assets/main.css'
 
 import { mount } from 'cypress/vue'
 
+import router from '@/router'
+import {createTestingPinia} from "@pinia/testing";
+
+Cypress.Commands.add( 'vmount', (...args: any) => {
+
+  args.global = args.global || {}
+  args.global.plugins = args.global.plugins || []
+
+  args.global.plugins.push( createTestingPinia({createSpy: cy.spy }) )
+  args.global.plugins.push( router )
+
+  return mount(...args)
+      .then( (wrapper) => {
+        return cy.wrap(wrapper).as('vueWrapper')
+      })
+})
+
+
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
 // Alternatively, can be defined in cypress/support/component.d.ts

@@ -1,24 +1,23 @@
+import { createTestingPinia } from '@pinia/testing'
 import EventVerify from '@/views/EventVerify.vue'
 import {events} from '@/../events-db.json'
 import router from '@/router'
 
-// Great ... XHR testing
-// https://github.com/JessicaSachs/cy-component-interview/blob/master/src/components/xhr/ajax-list-spec.js
-//  first setup a server mocking
-//  ... prior to mounting
-
 let mockEvent = events[3]
 
 function mountVerify( event = mockEvent, backendEvent = {}) {
-    cy.mount(EventVerify, {
+    cy.vmount(EventVerify, {
       props: {
         id: mockEvent.id,
         event,
         backendEvent
-      },
-      global: {
-        plugins: [ router ]
       }
+/*
+  // NOTE:  this is added to the "vmount" command in commands.ts
+      global: {
+        plugins: [ router, createTestingPinia({createSpy: cy.spy }) ]
+      }
+*/
     })
 }
 
@@ -77,8 +76,8 @@ describe('EventVerify component', () => {
       .should('contain', mockEvent.title )
   })
 
-  it('remote api response is mocked', async () => {
-    const testEvent = { id: 123, title: 'test title', date: 'Nov 10, 1997', time: '12 noon'}
+  it('remote api response is mocked', () => {
+    const testEvent = { id: 123, title: 'INTERCEPTED test title !!', date: 'Nov 10, 1997', time: '12 noon'}
 
     mountVerify()
 
@@ -89,12 +88,15 @@ describe('EventVerify component', () => {
 
     cy.getBySel('button').click()
 
-    await cy.getBySel('card-backend')
+    cy.getBySel('card-backend')
       .should('exist')
       .get('h4')
       .should('contain', testEvent.title )
 
 /*
+    also worked with await cy.getBySel('card-backend') ...
+
+    OR
       .then( async (resp) => {
           console.log('cypress vue', Cypress.vue)
           console.log('cypress click resp=', resp)

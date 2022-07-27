@@ -7,7 +7,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import {createTestingPinia} from "@pinia/testing";
 
 import {useEvents} from '@/stores/events-store'
-import EventList from '@/views/EventList.vue'
+import EventList from '@/components/EventList.vue'
 // @ts-ignore
 import { events as mockEvents } from '@/../events-db.json'
 
@@ -52,6 +52,19 @@ describe('EventList', () => {
 
     beforeEach( async () => {
       await store.fetchEvents()
+    })
+
+    it('finds events from store', async () => {
+
+      await nextTick()
+      // await store.fetchEvents()
+      console.log( wrapper.vm.events )
+      debugger;
+
+      expect( wrapper.vm.events ).toHaveLength( 9 )
+
+      const events = wrapper.findAll('[data-testid=event]')
+      expect(events).toHaveLength(mockEvents.length)
     })
 
     it.skip('are rendered in a list with necessary information', async () => {

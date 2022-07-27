@@ -1,5 +1,6 @@
 <script setup>
 import {watch,ref,computed,watchEffect} from 'vue'
+import {useEvents} from "@/stores/events-store";
 import EventCard from "@/components/EventCard.vue";
 import EventService from "@/services/EventService";
 
@@ -19,7 +20,10 @@ const props = defineProps({
   }
 })
 
+const estore = useEvents()
 const backEvent = ref(props.backendEvent)
+
+const eventc = computed( () => props.event ? props.event : estore.getById(props.id) )
 
 watch(
     () => props.backendEvent,
@@ -49,7 +53,7 @@ async function requery() {
       <div class="my-col">
         <h3>Current Data:</h3>
         <EventCard
-            :event="event"
+            :event="eventc"
             :verify="false"
             data-testid="card-current"
         />

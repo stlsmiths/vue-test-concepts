@@ -35,13 +35,6 @@
 //     }
 //   }
 // }
-import { mount } from 'cypress/vue'
-
-Cypress.Commands.add( 'mount', (...args) => {
-  return mount(...args).then((wrapper) => {
-    return cy.wrap(wrapper).as('vueWrapper')
-  })
-})
 
 Cypress.Commands.add( 'getBySel', (selector, ...args) => {
   return cy.get(`[data-testid="${selector}"]`, ...args)
