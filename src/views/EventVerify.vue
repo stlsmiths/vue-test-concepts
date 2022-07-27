@@ -23,7 +23,7 @@ const props = defineProps({
 const estore = useEvents()
 const backEvent = ref(props.backendEvent)
 
-const eventc = computed( () => props.event ? props.event : estore.getById(props.id) )
+const eventc = computed( () => props.event ? props.event : estore.getById( props.id) )
 
 watch(
     () => props.backendEvent,

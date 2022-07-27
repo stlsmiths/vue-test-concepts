@@ -11,20 +11,21 @@ const props = defineProps({
 
 const estore = useEvents()
 
-const event = ref({})
+const event = computed( () => estore.getById(props.id) )
 
-const isNumeric = (id) => /^\d+$/.test(id)
-
+/*
 watch(
     () => props.id,
     (id) => {
       if ( id ) {
         // event.value = estore.eventById( isNumeric(id) ? parseInt(id) : id )
-        event.value = estore.getById( isNumeric(id) ? parseInt(id) : id )
+        event.value = estore.getById( id )
       }
     },
     {immediate: true}
 )
+*/
+
 </script>
 
 <template>

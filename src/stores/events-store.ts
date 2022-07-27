@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia'
 import {ref,computed} from 'vue'
 // @ts-ignore
+import {isNumeric} from "@/common/utility-funcs";
+
+// @ts-ignore
 import EventService from "@/services/EventService.js";
 
 export const useEvents = defineStore( 'events', () => {
@@ -14,10 +17,14 @@ export const useEvents = defineStore( 'events', () => {
     }
 
     function eventById(id: string | number) {
-        return events.value.find( (e:any) => e.id === id )
+        id = isNumeric(id) ? parseInt(id) : ''+id
+        return events.value.find( (e:any) => e.id === id ) || {}
     }
 
-    const getById = computed( () => (id: string | number) => events.value.find( (e:any) => e.id === id ) )
+    const getById = computed( () => (id: string | number) => {
+        id = isNumeric(id) ? parseInt(id) : ''+id
+        return events.value.find( (e:any) => e.id === id ) || {}
+    })
 
     return {
         events,
