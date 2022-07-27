@@ -23,7 +23,7 @@ const router = createRouter({
    {
       path: '/event_verify/:id',
       name: 'EventVerify',
-      props: route => ({ params: route.params.id }),
+      props: route => ({ id: route.params.id }),
       component: () => import('@/views/EventVerify.vue')
    }
   ]

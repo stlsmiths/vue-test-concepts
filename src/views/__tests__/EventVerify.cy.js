@@ -78,61 +78,33 @@ describe('EventVerify component', () => {
   })
 
   it('remote api response is mocked', async () => {
-    // console.log('pinia', Cypress.vue.$pinia)
-    // debugger;
-
     const testEvent = { id: 123, title: 'test title', date: 'Nov 10, 1997', time: '12 noon'}
 
     mountVerify()
 
-    cy.intercept(`http://localhost:3000/event/${mockEvent.id}`, {
+    cy.intercept(`http://localhost:3000/events/${mockEvent.id}`, {
       delay: 300,
       body: testEvent
     })
 
-    cy.get('button').click()
+    cy.getBySel('button').click()
 
-      const id = await cy.then( (resp) => {
-
-        console.log('cypress vue', Cypress.vue)
-        console.log('cypress click resp=', resp)
-        // debugger;
-
-        /*
-        cy.getBySel('card-backend')
-          .should('exist')
-          .get('h4')
-          .should('contain', testEvent.title )
-*/
-
-      })
-
-
-  })
+    await cy.getBySel('card-backend')
+      .should('exist')
+      .get('h4')
+      .should('contain', testEvent.title )
 
 /*
-(
-      <div class="p-12">
-        <h1 class="text-lg">Accordion Examples</h1>
-        <h1 class="pb-8">Click on the header to toggle the card</h1>
-        <Accordion vSlots={slots}></Accordion>
-      </div>
-    )
- */
-
-  it.skip('', () => {
-    // from
-    //  https://github.com/JessicaSachs/cy-component-interview/blob/master/src/components/xhr/ajax-list-spec.js
-    cy.server()
-    cy.route({
-      method: 'GET',
-      url: 'http://localhost:3000/event/123',
-      response: mockEvent,
-      delay: 1000
-    }).as('event')
-    cy.mount(EventVerify)
-
-    cy.wait('@event').its('response.body').should('have.attr', 'id')
+      .then( async (resp) => {
+          console.log('cypress vue', Cypress.vue)
+          console.log('cypress click resp=', resp)
+          // debugger;
+          cy.getBySel('card-backend')
+            .should('exist')
+            .get('h4')
+            .should('contain', testEvent.title )
+        })
+*/
   })
 
 })

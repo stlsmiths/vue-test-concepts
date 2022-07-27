@@ -32,10 +32,11 @@ watch(
 
 async function requery() {
   console.log('query btn clicked')
+  debugger;
   const resp = await EventService.getEvent(props.id)
   console.log('event id', props.id,'resp=', resp)
   if ( resp && resp.data ) {
-    backEvent.value = resp.data
+    backEvent.value = {...resp.data}
   }
 }
 </script>
