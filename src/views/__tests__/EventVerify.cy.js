@@ -21,6 +21,8 @@ function mountVerify( event = mockEvent, backendEvent = {}) {
     })
 }
 
+
+
 describe('EventVerify component', () => {
 
   it('exists and renders', () => {

@@ -8,6 +8,7 @@ describe('EventDetails page ... /event/:id', () => {
     it('visits the /event/:id page', () => {
         cy.visit('/event/' + mockEvent.id ).should('exist')
     })
+
     it('should exist and renders h1 title properly', () => {
         cy.get('h1')
             .should('exist')

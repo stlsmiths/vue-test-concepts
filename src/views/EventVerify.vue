@@ -27,16 +27,6 @@ watchEffect( () => {
   eventc.value = props.event || estore.getById( props.id ) //Object.keys(val)>0 ? {...val} : estore.getById( props.id )
 })
 
-/*
-watch(
-    () => props.id,
-    (id) => {
-      eventc.value = estore.getById( props.id ) //Object.keys(val)>0 ? {...val} : estore.getById( props.id )
-    },
-    { immediate: true }
-)
-*/
-
 watch(
     () => props.backendEvent,
     (item) => {
