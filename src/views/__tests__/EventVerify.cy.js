@@ -60,7 +60,9 @@ describe('EventVerify component', () => {
       .should('contain', 'test title' )
   })
 
-  it('responds to Query button click - by making real API call', () => {
+  it('responds to Query button click - by stubbing API call', () => {
+    const testEvent = { id: 123, title: 'INTERCEPTED test title !!', date: 'Nov 10, 1997', time: '12 noon'}
+
     mountVerify( mockEvent )
 
     cy.getBySel('card-backend')
@@ -68,9 +70,16 @@ describe('EventVerify component', () => {
       .get('h4')
       .should('contain', '' )
 
-    const btn = cy.get('button')
-    btn.should('exist')
-    btn.click()
+    cy.intercept({
+        method: 'GET',
+        url: `http://localhost:3000/events/${mockEvent.id}`,
+      },
+      testEvent
+    ).as('getEventStub')
+
+    cy.get('button').should('exist').click()
+
+    cy.wait('@getEventStub')
 
     cy.getBySel('card-backend')
       .should('exist')
@@ -86,9 +95,11 @@ describe('EventVerify component', () => {
     cy.intercept(`http://localhost:3000/events/${mockEvent.id}`, {
       delay: 300,
       body: testEvent
-    })
+    }).as('getEventStub')
 
     cy.getBySel('button').click()
+
+    cy.wait('@getEventStub')
 
     cy.getBySel('card-backend')
       .should('exist')
