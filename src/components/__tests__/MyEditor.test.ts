@@ -378,7 +378,7 @@ describe('MyEditor', () => {
       expect( reset[0][0] ).toBeUndefined()
     })
 
-    it.skip('should emit reset event - using spies', async () => {
+    it('should emit reset event - using spies', async () => {
       expect( vm.isDirty ).toBe( false )
 
       // update some items ...
@@ -391,15 +391,16 @@ describe('MyEditor', () => {
       expect( vm.editItem.text ).toBe( ntext )
 
       // check event
-      const spy = vi.spyOn(vm,'onReset').mockImplementation( (res) => ({results: 'DONE'}) )
+      // const spy = vi.spyOn(vm,'onReset').mockImplementation( (res) => ({results: 'DONE'}) )
+      // expect( spy ).toHaveBeenCalledOnce()
+      // expect( spy ).toHaveReturnedWith({results: 'DONE'})
 
-      // await resetBtn.trigger('click')
-      vm.onReset()
+      await resetBtn.trigger('click')
+      // await vm.onReset()
       const reset = wrapper.emitted('reset')
 
-      expect( spy ).toHaveBeenCalled()
-      expect( spy ).toHaveReturnedWith({results: 'DONE'})
       expect( reset ).toBeTruthy()
+
       expect( reset ).toHaveLength( 1 )
       expect( reset[0][0] ).toBeUndefined()
     })
