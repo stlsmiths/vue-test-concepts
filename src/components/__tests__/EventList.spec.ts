@@ -17,9 +17,7 @@ function mountEventList(config: any = {}) {
   return mount(EventList, {
     global: {
       plugins: [
-        createTestingPinia({
-          createSpy: vi.fn
-        }),
+        createTestingPinia({ createSpy: vi.fn }),
         router
       ]
     },
@@ -32,7 +30,7 @@ describe('EventList', () => {
 
   beforeEach(() => {
     wrapper = mountEventList()
-    setActivePinia(createPinia())
+    setActivePinia( createPinia() )
     store = useEvents()
   })
 
@@ -49,22 +47,27 @@ describe('EventList', () => {
   })
 
   describe('events', async () => {
-
+    let fevents
     beforeEach( async () => {
-      await store.fetchEvents()
+      mountEventList()
+      fevents = await store.fetchEvents()
     })
 
     it('finds events from store', async () => {
 
-      await nextTick()
+      // await nextTick()
       // await store.fetchEvents()
-      console.log( wrapper.vm.events )
-      debugger;
+      // console.log( 'finds events from store !!! ', wrapper.vm.estore.events )
+      // console.log('fevents', fevents)
+      // debugger;
 
-      expect( wrapper.vm.events ).toHaveLength( 9 )
+      expect( store.events ).toHaveLength( 9 )
 
-      const events = wrapper.findAll('[data-testid=event]')
-      expect(events).toHaveLength(mockEvents.length)
+      expect( wrapper.get('.events') ).toBeTruthy()
+
+      const events = wrapper.findAll('[data-testid="event-link"]')
+      console.log('events === ', events)
+      expect( events ).toHaveLength( mockEvents.length )
     })
 
     it.skip('are rendered in a list with necessary information', async () => {

@@ -23,9 +23,11 @@ import '../../src/assets/main.css'
 
 import { mount } from 'cypress/vue'
 
-import router from '@/router'
+// @ts-ignore
+import router from '../../src/router'
 import {createTestingPinia} from "@pinia/testing";
 
+// @ts-ignore
 Cypress.Commands.add( 'vmount', (...args: any) => {
 
   args.global = args.global || {}
@@ -39,7 +41,6 @@ Cypress.Commands.add( 'vmount', (...args: any) => {
         return cy.wrap(wrapper).as('vueWrapper')
       })
 })
-
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.

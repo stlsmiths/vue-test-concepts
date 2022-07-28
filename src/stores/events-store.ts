@@ -12,8 +12,8 @@ export const useEvents = defineStore( 'events', () => {
     async function fetchEvents() {
         const resp = await EventService.getEvents()
         // console.log('store fetchEvents', resp)
-        events.value = resp.data
-        return resp.data
+        events.value = resp?.data || resp
+        return resp
     }
 
     function eventById(id: string | number) {

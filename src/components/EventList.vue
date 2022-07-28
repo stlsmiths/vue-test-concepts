@@ -3,7 +3,8 @@ import {computed,onMounted} from "vue";
 import EventCard from '@/components/EventCard.vue'
 import {useEvents} from "@/stores/events-store";
 
-const events = computed( () => useEvents().events )
+const estore = useEvents()
+const events = computed( () => estore.events )
 
 </script>
 
@@ -15,6 +16,7 @@ const events = computed( () => useEvents().events )
         :to="{ name: 'EventDetails', params: { id: event.id } }"
         v-for="event in events"
         :key="event.id"
+        data-testid="event-link"
     >
       <EventCard data-testid="event" :event="event" />
     </router-link>
