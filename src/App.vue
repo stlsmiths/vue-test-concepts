@@ -10,7 +10,15 @@ onMounted( async () => {
 </script>
 
 <template>
-  <RouterView />
+  <div>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/events">Events</router-link> |
+    <router-link to="/testpage">TestPage</router-link>
+  </div>
+  <br>
+  <div style="margin-top: 2rem;">
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>

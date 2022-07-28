@@ -7,12 +7,14 @@ export const handlers = [
     let data = { message: 'Hello from Vue Mastery!' }
     data = events
     // data = { data: events }
+    console.log('mockServer ... localhost:3000/events')
     return res( ctx.status(200), ctx.json(data) )
   }),
   rest.get('/events', (req, res, ctx) => {
     let data = { message: 'Hello from Vue Mastery!' }
     data = events
     // data = { data: events }
+    console.log('mockServer ... /events')
     return res( ctx.status(200), ctx.json(data) )
   }),
 
