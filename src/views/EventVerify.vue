@@ -11,8 +11,7 @@ const props = defineProps({
     required: true
   },
   event: {
-    type: Object,
-    default: () => ({})
+    type: Object
   },
   backendEvent: {
     type: Object,
@@ -22,8 +21,21 @@ const props = defineProps({
 
 const estore = useEvents()
 const backEvent = ref(props.backendEvent)
+const eventc = ref(props.event)
 
-const eventc = computed( () => props.event ? props.event : estore.getById( props.id) )
+watchEffect( () => {
+  eventc.value = props.event || estore.getById( props.id ) //Object.keys(val)>0 ? {...val} : estore.getById( props.id )
+})
+
+/*
+watch(
+    () => props.id,
+    (id) => {
+      eventc.value = estore.getById( props.id ) //Object.keys(val)>0 ? {...val} : estore.getById( props.id )
+    },
+    { immediate: true }
+)
+*/
 
 watch(
     () => props.backendEvent,
@@ -35,8 +47,7 @@ watch(
 )
 
 async function requery() {
-  console.log('query btn clicked')
-  debugger;
+  console.log('query btn clicked', eventc.value )
   const resp = await EventService.getEvent(props.id)
   console.log('event id', props.id,'resp=', resp)
   if ( resp && resp.data ) {
