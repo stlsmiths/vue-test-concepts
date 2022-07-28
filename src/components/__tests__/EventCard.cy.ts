@@ -1,4 +1,5 @@
 import EventCard from '@/components/EventCard.vue'
+// @ts-ignore
 import {events} from '@/../events-db.json'
 
 let mockEvent = events[0]

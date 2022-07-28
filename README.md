@@ -16,7 +16,7 @@ Technologies used in this repo;
    * [json-server](https://www.npmjs.com/package/json-server#getting-started) for storage of fake database data for testing
    * [Mock Service Worker](https://mswjs.io/docs/getting-started/mocks/rest-api) for mocking API requests during testing
 
-![logo](vitest_units.jpg)
+![Vitest coverage](unit-test-cover.jpg)
 
 
 ## Testing Roadmap
