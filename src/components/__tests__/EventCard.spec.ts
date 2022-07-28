@@ -18,8 +18,8 @@ describe('EventCard', () => {
     })
 
     const wrapperHtml = wrapper.html()
-    expect(wrapperHtml).toContain(event.date)
-    expect(wrapperHtml).toContain(event.time)
-    expect(wrapperHtml).toContain(event.title)
+    expect( wrapperHtml ).toContain( event.date )
+    expect( wrapperHtml ).toContain( event.time )
+    expect( wrapperHtml ).toContain( event.title )
   })
 })

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi} from 'vitest'
 import { mount } from '@vue/test-utils'
 // @ts-ignore
 import { createTestingPinia } from '@pinia/testing'
-import {useSampleStore} from "@/stores/sample-store";
+import {useSampleStore,initialState} from "@/stores/sample-store";
 
 import MyEditor from '../MyEditor.vue'
 
@@ -28,10 +28,12 @@ const mockItem = { test: 3, text: 'Test item TEXT' }
 function mountEditor( options = {} ) {
   return mount(MyEditor, {
     globals: {
-      plugins: [ createTestingPinia({
-        stubActions: false,
-        createSpy: vi.fn
-      }) ]
+      plugins: [
+          createTestingPinia({
+            stubActions: false,
+            createSpy: vi.fn,
+            initialState
+          }) ]
     },
     ...options
   })
@@ -325,6 +327,7 @@ describe('MyEditor', () => {
       cancelBtn = wrapper.find(cancelSelector)
       dropBtn = wrapper.find(dropSelector)
       vm = wrapper.vm
+      const store = useSampleStore()
     })
 
     it('should fire "save" after editing input[text]', async () => {
